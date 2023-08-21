@@ -1,39 +1,43 @@
+# using docker-compose version 3
 version: '3'
 
+# create multiple services
 services:
   item-app:
     image: ghcr.io/kusumaningrat/item-app:v1
     container_name: item-app
-    restart: always
+    restart: always # container will always restart if stopped
     environment:
-      MONGO_INITDB_ROOT_USERNAME: dicoding
-      MONGO_INITDB_ROOT_PASSWORD: item-db
+      MONGO_INITDB_ROOT_USERNAME: dicoding ## initial root username for database set to env
+      MONGO_INITDB_ROOT_PASSWORD: item-db  ## initial root password for database set to env
     networks:
       - item
     ports:
-      - 80:8080
+      - 80:8080 # mapping port from container to localhost 80
     volumes:
-      - app-db:/data/db
+      - app-db:/data/db # using the volumes
     depends_on:
-      - item-db
+      - item-db # this service will only run after item-db
 
   item-db:
     image: mongo:3
     container_name: item-db
-    restart: always
+    restart: always # container will always restart if stopped
     networks:
       - item
     ports:
-      - 27017:27017
+      - 27017:27017 # mapping port from container to localhost 27017
     environment:
-      MONGO_INITDB_ROOT_USERNAME: dicoding
-      MONGO_INITDB_ROOT_PASSWORD: item-db
+      MONGO_INITDB_ROOT_USERNAME: dicoding # set root username to env for db
+      MONGO_INITDB_ROOT_PASSWORD: item-db  # set root password to env for db
     volumes:
-      - app-db:/data/db
+      - app-db:/data/db # using the volumes
 
+# create network with name item and driver bridge
 networks:
   item:
     driver: bridge
 
+# create volumes with name app-db
 volumes:
   app-db:
