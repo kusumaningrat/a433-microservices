@@ -8,8 +8,8 @@ services:
     container_name: item-app
     restart: always # container will always restart if stopped
     environment:
-      MONGO_INITDB_ROOT_USERNAME: dicoding ## initial root username for database set to env
-      MONGO_INITDB_ROOT_PASSWORD: item-db  ## initial root password for database set to env
+      MONGO_INITDB_ROOT_USERNAME: admin ## initial root username for database set to env
+      MONGO_INITDB_ROOT_PASSWORD: admin123  ## initial root password for database set to env
     networks:
       - item
     ports:
@@ -23,13 +23,11 @@ services:
     image: mongo:3
     container_name: item-db
     restart: always # container will always restart if stopped
+    command: [--auth]
     networks:
       - item
     ports:
       - 27017:27017 # mapping port from container to localhost 27017
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: dicoding # set root username to env for db
-      MONGO_INITDB_ROOT_PASSWORD: item-db  # set root password to env for db
     volumes:
       - app-db:/data/db # using the volumes
 
