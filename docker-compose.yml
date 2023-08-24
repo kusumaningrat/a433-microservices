@@ -23,7 +23,6 @@ services:
     image: mongo:3
     container_name: item-db
     restart: always # container will always restart if stopped
-    command: [--auth]
     networks:
       - item
     ports:
