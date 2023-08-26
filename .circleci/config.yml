@@ -12,7 +12,7 @@ jobs:
       - setup_remote_docker
       - run:
           name: Run hadolint
-          command: docker run --rm -i hadolint/hadolint < backend/Dockerfile
+          command: docker run --rm -i hadolint/hadolint < Dockerfile
 
   build-be-karsajobs:
     executor: docker
