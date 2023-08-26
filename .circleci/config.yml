@@ -1,0 +1,30 @@
+version: 2.1
+executors:
+  docker:
+    docker:
+      - image: docker:stable
+
+jobs:
+  lint-fe-dockerfile:
+    executor: docker
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: Run hadolint
+          command: docker run --rm -i hadolint/hadolint < Dockerfile
+
+
+  build-fe-karsajobs:
+    executor: docker
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run: "sh build_push_image_karsajobs_ui.sh"
+
+
+workflows:
+  frontend:
+    jobs:
+      - lint-fe-dockerfile
+      - build-fe-karsajobs
