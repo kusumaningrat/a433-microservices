@@ -1,18 +1,27 @@
+# Specifies the API version for the custom resource
 apiVersion: rabbitmq.com/v1beta1
+# Specifies the type of resource, which is RabbitmqCluster in this case.
 kind: RabbitmqCluster
+# specifies the RabbitmqCluster
 metadata:
+  # field specifies the name of the RabbitMQ cluster, which is "rabbitmq-cluster"
   name: rabbitmq-cluster
 spec:
+  # Specifies the number of replicas
   replicas: 3
+  # Specifies the statefulSet
   override:
     statefulSet:
       spec:
         podManagementPolicy: OrderedReady
   service:
+    # Specifies the service to ClusterIp
     type: ClusterIP
+  # Specifies the storage with storageClassName to standard and size to 20Gi
   persistence:
     storageClassName: standard
     storage: 20Gi
+  # Specifies the affinity
   affinity:
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -23,6 +32,7 @@ spec:
               values:
               - rabbitmq-cluster
         topologyKey: kubernetes.io/hostname
+  # Specifies the security
   rabbitmq:
     additionalPlugins:
     - rabbitmq_federation

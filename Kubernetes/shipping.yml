@@ -1,12 +1,19 @@
 ---
+# Specifies the API version for the custom resource
 apiVersion: v1
+# Specifies the type of resource, which is Service in this case.
 kind: Service
+# specifies the shipping-service
 metadata:
+  # field specifies the name of the shipping service to shipping-service
   name: shipping-service
+  # field specifies the label of shipping service so it can used with selector
   labels:
     name: shipping-service
 spec:
+  # Specifies the type of service to NodePort
   type: NodePort
+  # Specifies the selector
   selector:
     name: shipping-service
   ports:
@@ -15,27 +22,40 @@ spec:
       nodePort: 30001
 
 ---
+# Specifies the API version for the custom resource
 apiVersion: apps/v1
+# Specifies the type of resource, which is Deployment in this case.
 kind: Deployment
+# specifies the shipping Deployment
 metadata:
+  # field specifies the name of the shipping deployment to shipping
   name: shipping
+  # field specifies the label of shipping deployment so it can used with selector
   labels:
     name: shipping
 spec:
+  # Specifies the number of replicas
   replicas: 1
+  # Specifies the selector
   selector:
     matchLabels:
       name: shipping
+  # Specifies the template of Deployment
   template:
     metadata:
       labels:
         name: shipping
+    # Specifies the container
     spec:
       containers:
+          # naming container to shipping
         - name: shipping
+          # using image from Github Container Registry with image shipping-service and tag latest
           image: ghcr.io/kusumaningrat/shipping-service
+          # set environment
           env:
             - name: AMPQ_URL
-              value: http://192.168.49.2:30001
+              # set value to http://192.168.49.2:5672 which 192.168.49.2 is minikube ip 
+              value: http://192.168.49.2:5672
           port:
             containerPort: 3001
