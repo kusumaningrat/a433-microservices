@@ -1,27 +1,39 @@
+---
+# Specifies the API version for the custom resource
 apiVersion: networking.istio.io/v1alpha3
+# Specifies the type of resource, which is Gateway in this case.
 kind: Gateway
+# specifies the order-gateway
 metadata:
+  # field specifies the name of the gatewa7 to order-gateway
   name: order-gateway
 spec:
   selector:
     istio: ingressgateway # use istio default controller
   servers:
+  # specify the gateway
   - port:
       number: 80
       name: http
       protocol: HTTP
+    # specify the host to listen all
     hosts:
     - "*"
 ---
+# Specifies the API version for the custom resource
 apiVersion: networking.istio.io/v1alpha3
+# Specifies the type of resource, which is VirtualService in this case.
 kind: VirtualService
 metadata:
+  # field specifies the name of the gatewa7 to order-gateway
   name: order
 spec:
+  # specify the gateway
   hosts:
   - "*"
   gateways:
   - order-gateway
+  # specify the route
   http:
   - match:
     - uri:

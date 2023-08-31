@@ -1,12 +1,19 @@
 ---
+# Specifies the API version for the custom resource
 apiVersion: v1
+# Specifies the type of resource, which is Service in this case.
 kind: Service
+# specifies the order-service
 metadata:
+  # field specifies the name of the order service to order-service
   name: order-service
+  # field specifies the label of order service so it can used with selector
   labels:
     name: order-service
 spec:
+  # Specifies the type of service to NodePort
   type: NodePort
+  # Specifies the selector
   selector:
     name: order-service
   ports:
@@ -15,27 +22,40 @@ spec:
       nodePort: 30000
 
 ---
+# Specifies the API version for the custom resource
 apiVersion: apps/v1
+# Specifies the type of resource, which is Deployment in this case.
 kind: Deployment
+# specifies the order Deployment
 metadata:
+  # field specifies the name of the order deployment to order
   name: order
+  # field specifies the label of order deployment so it can used with selector
   labels:
     name: order
 spec:
+  # Specifies the number of replicas
   replicas: 1
+  # Specifies the selector
   selector:
     matchLabels:
       name: order
+  # Specifies the template of Deployment
   template:
     metadata:
       labels:
         name: order
+    # Specifies the container
     spec:
       containers:
+          # naming container to order
         - name: order
+          # using image from Github Container Registry with image order-service and tag latest
           image: ghcr.io/kusumaningrat/order-service
+          # set environment
           env:
             - name: AMPQ_URL
-              value: http://192.168.49.2:30000
+              # set value to http://192.168.49.2:5672 which 192.168.49.2 is minikube ip 
+              value: http://192.168.49.2:5672
           port:
-            containerPort: 3000
+            containerPort: 3001
