@@ -57,5 +57,5 @@ spec:
             - name: AMPQ_URL
               # set value to http://192.168.49.2:5672 which 192.168.49.2 is minikube ip 
               value: http://192.168.49.2:5672
-          port:
+          ports:
             containerPort: 3001
