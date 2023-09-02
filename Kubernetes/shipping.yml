@@ -18,8 +18,7 @@ spec:
     name: shipping-service
   ports:
     - port: 3001
-      targetPort: 3001
-      nodePort: 30001
+      name: http
 
 ---
 # Specifies the API version for the custom resource

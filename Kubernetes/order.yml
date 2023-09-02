@@ -18,8 +18,7 @@ spec:
     name: order-service
   ports:
     - port: 3000
-      targetPort: 3000
-      nodePort: 30000
+      name: http
 
 ---
 # Specifies the API version for the custom resource
