@@ -1,5 +1,5 @@
 # Menggunakan node:18-alpine sebagai base image
-FROM node:18-alpine
+FROM node:14.21-alpine
 # menetapkan working directory untuk container yang akan dibuat ke folder /src
 # artinya seluruh code akan berada di folder /src dalam container
 WORKDIR /src
